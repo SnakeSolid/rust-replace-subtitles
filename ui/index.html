@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Replace Subtitles</title>
+    <link rel="stylesheet" href="/css/semantic.css" />
+    <link rel="stylesheet" href="/css/frame.css" />
+    <script data-main="/scripts/main" src="/scripts/require.js"></script>
+  </head>
+  <body>
+    <div id="app" class="ui container">
+      <form class="ui form">
+        <div class="field" :class="{ error: !subtitles.valid }">
+          <div class="ui fluid labeled action input">
+            <div class="ui label">SRT file:</div>
+            <input
+              type="text"
+              placeholder="Path to subtitles file"
+              v-model="subtitles.path"
+              v-on:focus="popupShow(subtitles)"
+              v-on:blur="popupHide(subtitles)"
+            />
+            <div
+              class="ui wide popup bottom left"
+              style="inset: auto"
+              :class="{ visible: subtitles.popup }"
+            >
+              {{ subtitles.message }}
+            </div>
+            <div class="ui teal button" @click.prevent="selectSubtitles">
+              Select&hellip;
+            </div>
+          </div>
+        </div>
+
+        <div class="field" :class="{ error: !text.valid }">
+          <div class="ui fluid labeled action input">
+            <div class="ui label">TXT file:</div>
+            <input
+              type="text"
+              placeholder="Path to translation file"
+              v-model="text.path"
+              v-on:focus="popupShow(text)"
+              v-on:blur="popupHide(text)"
+            />
+            <div
+              class="ui wide popup bottom left"
+              style="inset: auto"
+              :class="{ visible: text.popup }"
+            >
+              {{ text.message }}
+            </div>
+            <div class="ui teal button" @click.prevent="selectText">
+              Select&hellip;
+            </div>
+          </div>
+        </div>
+
+        <div class="field" :class="{ error: !output.valid }">
+          <div class="ui fluid labeled action input">
+            <div class="ui label">Output file:</div>
+            <input
+              type="text"
+              placeholder="Path to output file"
+              v-model="output.path"
+              v-on:focus="popupShow(output)"
+              v-on:blur="popupHide(output)"
+            />
+            <div
+              class="ui wide popup bottom left"
+              style="inset: auto"
+              :class="{ visible: output.popup }"
+            >
+              {{ output.message }}
+            </div>
+            <div class="ui teal button" @click.prevent="selectOutput">
+              Select&hellip;
+            </div>
+          </div>
+        </div>
+
+        <div class="ui right floated buttons">
+          <button
+            class="ui primary button"
+            :class="{ disabled: hasErrors() }"
+            @click.prevent="convert"
+          >
+            Convert subtitles
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
